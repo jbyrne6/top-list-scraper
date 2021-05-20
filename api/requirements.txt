@@ -1,0 +1,12 @@
+flask
+python-dotenv
+beautifulsoup4
+selenium
+
+# setuptools
+# numpy
+# python-dateutil
+# pytz
+# numexpr
+# bottleneck
+# pandas
