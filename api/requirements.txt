@@ -1,12 +1,6 @@
 flask
 python-dotenv
 beautifulsoup4
+chromedriver 
 selenium
-
-# setuptools
-# numpy
-# python-dateutil
-# pytz
-# numexpr
-# bottleneck
-# pandas
+pandas

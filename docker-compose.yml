@@ -27,12 +27,3 @@ services:
       - CHOKIDAR_USEPOLLING=true
     links:
       - "api:api"
-  # api:
-  #   build: ./api
-  #   command: python api.py run -h 0.0.0.0
-  #   volumes:
-  #     - ./api/:/usr/src/app/
-  #   ports:
-  #     - 5000:5000
-  #   env_file:
-  #     - ./api/.flaskenv
