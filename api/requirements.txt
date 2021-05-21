@@ -4,3 +4,6 @@ beautifulsoup4
 chromedriver 
 selenium
 pandas
+imgkit
+pdfkit
+googlesearch-python

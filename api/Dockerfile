@@ -4,7 +4,7 @@ FROM python:3.8.6-buster
 # FROM ubuntu:latest
 
 RUN apt-get update -y
-RUN apt-get install -y python3-pip python-dev build-essential
+RUN apt-get install -y python3-pip python-dev build-essential 
 
 # set work directory
 RUN mkdir -p /usr/src/app
@@ -33,6 +33,7 @@ ENV PATH $CHROMEDRIVER_DIR:$PATH
 # install dependencies
 COPY ./requirements.txt /usr/src/app/requirements.txt
 RUN pip3 install -r requirements.txt
+RUN apt-get install -y wkhtmltopdf
 
 ENTRYPOINT ["flask"]
 CMD ["run", "--host=0.0.0.0"]

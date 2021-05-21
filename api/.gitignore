@@ -1,3 +1,9 @@
 # flask api server
 venv
 __pycache__
+
+# exclude everything
+screenshots/*
+
+# exception to the rule
+!screenshots/.gitkeep 
