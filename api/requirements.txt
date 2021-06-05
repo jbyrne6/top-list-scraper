@@ -7,3 +7,5 @@ pandas
 imgkit
 pdfkit
 googlesearch-python
+requests
+futures

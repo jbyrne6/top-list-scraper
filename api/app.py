@@ -8,9 +8,14 @@ from selenium.webdriver.chrome.options import Options
 import imgkit
 import pdfkit
 from googlesearch import search
+import concurrent.futures
+import requests
+import threading
 
 
 app = Flask(__name__)
+
+thread_local = threading.local()
 
 @app.route('/time')
 def get_current_time():
@@ -55,8 +60,8 @@ def site_to_image(index, siteUrl):
         # ],
         # 'no-outline': None
     }
-    # image = imgkit.from_url(siteUrl, f'./screenshots/{name}.jpg')
-    pdf = pdfkit.from_url(siteUrl, f'./screenshots/{index}.pdf', options=options)
+    image = imgkit.from_url(siteUrl, f'./screenshots/{index}.jpg')
+    # pdf = pdfkit.from_url(siteUrl, f'./screenshots/{index}.pdf', options=options)
     # image = imgkit.from_url(siteUrl, None)
     return "downloaded image from " + siteUrl
 
@@ -72,13 +77,29 @@ def listToString(s):
     # return string  
     return str1 
 
+def download_all_sites(sites):
+    indexCount = []
+    for index, url in enumerate(sites):
+        indexCount.append(index + 1)
+    
+    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+        executor.map(site_to_image, indexCount, sites)
+
+
 @app.route('/googleSearch/<searchTerm>')
 def google_search(searchTerm):
-    # get top n urls
-    numResults = 2
+    # delete all files in the screenshots folder
+    dir = 'screenshots'
+    for f in os.listdir(dir):
+        os.remove(os.path.join(dir, f))
+
+    # get top n urls from google search
+    numResults = 20
     searchResults = search(searchTerm, num_results=numResults)
-    for index, url in enumerate(searchResults):
-        print(f'{index}: {url}')
-        site_to_image(index, url)
+
+    download_all_sites(searchResults)
+    # for index, url in enumerate(searchResults):
+    #     print(f'{index}: {url}')
+    #     # site_to_image(index, url)
 
     return listToString(searchResults)
