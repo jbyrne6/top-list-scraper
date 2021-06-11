@@ -11,17 +11,23 @@ from googlesearch import search
 import concurrent.futures
 import requests
 import threading
+from flask_cors import CORS, cross_origin
 
 
 app = Flask(__name__)
 
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+
 thread_local = threading.local()
 
 @app.route('/time')
+@cross_origin()
 def get_current_time():
     return {'time': time.time()}
 
 @app.route('/gbaTest')
+@cross_origin()
 def get_top_25_gba():
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
@@ -87,6 +93,7 @@ def download_all_sites(sites):
 
 
 @app.route('/googleSearch/<searchTerm>')
+@cross_origin()
 def google_search(searchTerm):
     # delete all files in the screenshots folder
     dir = 'screenshots'
@@ -94,12 +101,15 @@ def google_search(searchTerm):
         os.remove(os.path.join(dir, f))
 
     # get top n urls from google search
-    numResults = 20
+    numResults = 10
     searchResults = search(searchTerm, num_results=numResults)
+    print(searchResults)
+    print(listToString(searchResults))
+    urlList = {v: k for v, k in enumerate(searchResults)}
 
     download_all_sites(searchResults)
     # for index, url in enumerate(searchResults):
     #     print(f'{index}: {url}')
     #     # site_to_image(index, url)
 
-    return listToString(searchResults)
+    return urlList

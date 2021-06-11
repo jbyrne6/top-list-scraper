@@ -9,3 +9,4 @@ pdfkit
 googlesearch-python
 requests
 futures
+flask-cors

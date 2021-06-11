@@ -1,3 +1,7 @@
 export const INCREMENT = 'INCREMENT';
 
 export const DECREMENT = 'DECREMENT';
+
+export const SET_SEARCH_LOADING = 'SET_SEARCH_LOADING';
+
+export const SET_SEARCH_RESULTS = 'SET_SEARCH_RESULTS';
