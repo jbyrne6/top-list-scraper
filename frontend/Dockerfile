@@ -2,10 +2,11 @@
 FROM node:13.12.0-alpine
 
 # set working directory
-WORKDIR /app
+# WORKDIR /app
+WORKDIR /usr/src/frontend
 
 # add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+ENV PATH /usr/src/frontend/node_modules/.bin:$PATH
 
 # install app dependencies
 COPY package.json ./
